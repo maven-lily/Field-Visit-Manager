@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#0d1b2a">
+  <title>Field Visit Management System</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+  <!-- FullCalendar -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+  
+  <!--Manifest File-->
+  <link rel="manifest" href="manifest-FVMS.json">
+
+  <!--CSS Style codes-->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /*-------------------
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      background:#f5f7fb;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    .sidebar{
+      width:260px;
+      height:100vh;
+      position:fixed;
+      left:0;
+      top:0;
+      background:#0d1b2a;
+      color:#fff;
+      overflow-y:auto;
+    }
+
+    .sidebar .logo{
+      padding:25px;
+      text-align:center;
+      border-bottom:1px solid rgba(255,255,255,0.1);
+    }
+
+    .sidebar .logo h4{
+      font-weight:bold;
+    }
+
+    .sidebar ul{
+      list-style:none;
+      padding:20px 0;
+    }
+
+    .sidebar ul li{
+      padding:14px 25px;
+      transition:0.3s;
+      cursor:pointer;
+    }
+
+    .sidebar ul li:hover{
+      background:#1b263b;
+    }
+
+    .sidebar ul li i{
+      margin-right:12px;
+    }
+
+    .main-content{
+      margin-left:260px;
+      padding:20px;
+    }
+
+    .topbar{
+      background:#fff;
+      padding:15px 20px;
+      border-radius:10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:25px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .dashboard-card{
+      background:#fff;
+      border-radius:15px;
+      padding:20px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.05);
+      margin-bottom:20px;
+    }
+
+    .dashboard-card h6{
+      color:#666;
+      margin-bottom:10px;
+    }
+
+    .dashboard-card h2{
+      font-weight:bold;
+      color:#0d1b2a;
+    }
+
+    .card-icon{
+      font-size:35px;
+      color:#0d6efd;
+    }
+
+    .section-card{
+      background:#fff;
+      border-radius:15px;
+      padding:20px;
+      margin-bottom:25px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .table th{
+      background:#0d1b2a;
+      color:white;
+    }
+
+    .announcement{
+      padding:15px;
+      border-left:5px solid #0d6efd;
+      background:#f0f6ff;
+      margin-bottom:15px;
+      border-radius:8px;
+    }
+
+    .visit-status{
+      padding:5px 10px;
+      border-radius:20px;
+      font-size:12px;
+      color:white;
+    }
+
+    .completed{
+      background:green;
+    }
+
+    .pending{
+      background:orange;
+    }
+
+    .missed{
+      background:red;
+    }
+
+    #calendar{
+      max-width:100%;
+      margin:auto;
+    }
+
+    .profile-card{
+      text-align:center;
+    }
+
+    .profile-card img{
+      width:90px;
+      height:90px;
+      border-radius:50%;
+      object-fit:cover;
+      margin-bottom:10px;
+    }
+
+    .upload-box{
+      border:2px dashed #bbb;
+      padding:30px;
+      text-align:center;
+      border-radius:10px;
+      background:#fafafa;
+      cursor:pointer;
+    }
+
+    .upload-box:hover{
+      background:#f1f1f1;
+    }
+
+    @media(max-width:992px){
+      .sidebar{
+        width:100%;
+        height:auto;
+        position:relative;
+      }
+
+      .main-content{
+        margin-left:0;
+      }
+    }
+
+    /*---Responsive Design
+
+    .mobile-topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:#0d1b2a;
+    color:white;
+    padding:15px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    }
+
+    .mobile-topbar button{
+    background:none;
+    border:none;
+    color:white;
+    font-size:22px;
+    }
+
+    .overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
+    display:none;
+    z-index:998;
+    }
+
+    .sidebar{
+    z-index:999;
+    transition:0.3s;
+    }
+
+    .sidebar.active{
+    left:0;
+    }
+
+    @media(max-width:992px){
+
+    .sidebar{
+        left:0px;
+        position:fixed;
+        width: 200px;
+        display: none;
+    }
+
+    .sidebar.active{
+        left:0;
+        display: block;
+        width: 200px;
+    }
+
+    .main-content{
+        margin-left:0;
+        padding:15px;
+    }
+
+    .dashboard-card{
+        margin-bottom:15px;
+    }
+
+    .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+    }
+
+    .section-card{
+        padding:15px;
+    }
+
+    .table-responsive{
+        overflow-x:auto;
+        height: auto;
+    }
+
+    #calendar{
+        overflow-x:auto;
+        
+    }
+
+    .profile-card img{
+        width:70px;
+        height:70px;
+    }
+
+    .upload-box{
+        padding:20px;
+    }
+
+    .fc-toolbar{
+        flex-direction:column !important;
+        gap:10px;
+    }
+
+    }
+
+    */
+
+  </style>
+</head>
+
+<body>
+
+    <!-- Mobile Topbar -->
+    <div class="mobile-topbar d-lg-none">
+
+    <button id="menuBtn">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <h5>FVMS</h5>
+
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+  <!-- Sidebar -->
+   <div class="install-container" id="install-container">
+    <button id="installBtn" class="btn btn-primary d-none">Install App</button>
+
+   </div>
+  <div class="sidebar" id="sidebar">
+
+    <div class="logo">
+      <h4><i class="fa-solid fa-school"></i> FVMS</h4>
+      <small>Field Visit Manager</small>
+    </div>
+
+    <ul>
+      <li><i class="fa-solid fa-gauge"></i> Dashboard</li>
+      <li><i class="fa-solid fa-calendar-days"></i> Calendar</li>
+      <li><i class="fa-solid fa-file-lines"></i> Field Visits</li>
+      <li><i class="fa-solid fa-users"></i> Supervisors</li>
+      <li><i class="fa-solid fa-bullhorn"></i> Announcements</li>
+      <li><i class="fa-solid fa-chart-line"></i> Reports</li>
+      <li><i class="fa-solid fa-gear"></i> Settings</li>
+      <li><i class="fa-solid fa-right-from-bracket"></i> Logout</li>
+    </ul>
+
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+
+    <!-- Topbar -->
+    <div class="topbar">
+
+      <div>
+        <h4>Dashboard</h4>
+        <small>Welcome back, Supervisor</small>
+      </div>
+
+      <div>
+        <button class="btn btn-primary">
+          <i class="fa-solid fa-plus"></i> New Visit
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Dashboard Cards -->
+    <div class="row">
+
+      <div class="col-md-3 h-100">
+        <div class="dashboard-card d-flex justify-content-between align-items-center primary-card">
+          <div>
+            <h6>Total Visits</h6>
+            <h2>145</h2>
+          </div>
+          <div class="card-icon">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 h-100">
+        <div class="dashboard-card d-flex justify-content-between align-items-center primary-card">
+          <div>
+            <h6>Supervisors</h6>
+            <h2>32</h2>
+          </div>
+          <div class="card-icon">
+            <i class="fa-solid fa-users"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 h-100">
+        <div class="dashboard-card d-flex justify-content-between align-items-center primary-card">
+          <div>
+            <h6>Schools Visited</h6>
+            <h2>78</h2>
+          </div>
+          <div class="card-icon">
+            <i class="fa-solid fa-school"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 h-100">
+        <div class="dashboard-card d-flex justify-content-between align-items-center submitted-card">
+          <div>
+            <h6>Submitted Reports</h6>
+            <h2>35</h2>
+          </div>
+          <div class="card-icon color-success">
+            <i class="fa-solid fa-calendar-check"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 h-100">
+        <div class="dashboard-card d-flex justify-content-between align-items-center pending-card">
+          <div>
+            <h6>Pending Reports</h6>
+            <h2>12</h2>
+          </div>
+          <div class="card-icon color-warning">
+            <i class="fa-solid fa-clock"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 h-100">
+        <div class="dashboard-card d-flex justify-content-between align-items-center less-visited-card">
+          <div>
+            <h6>Less Visited</h6>
+            <h2 class="color-secondary">32</h2>
+          </div>
+          <div class="card-icon color-secondary">
+            <i class="fa-solid fa-arrow-trend-down"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 h-100">
+        <div class="dashboard-card d-flex justify-content-between align-items-center most-visited-card">
+          <div>
+            <h6>Most Visited</h6>
+            <h2 class="color-success">54</h2>
+          </div>
+          <div class="card-icon color-success">
+            <i class="fa-solid fa-arrow-trend-up"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 h-100">
+        <div class="dashboard-card d-flex justify-content-between align-items-center high-risk-card">
+          <div>
+            <h6>High Risks</h6>
+            <h2 class="color-danger">10</h2>
+          </div>
+          <div class="card-icon color-danger">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Charts -->
+    <div class="row">
+
+      <div class="col-md-8">
+        <div class="section-card">
+          <h5 class="mb-4 container-header">Monthly Field Visits</h5>
+          <canvas id="visitsChart"></canvas>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="section-card">
+          <h5 class="mb-4 container-header">Supervisor Profile</h5>
+
+          <div class="profile-card">
+            <img src="https://i.pravatar.cc/100" alt="">
+            <h5>John Doe</h5>
+            <p>Regional Supervisor</p>
+
+            <hr>
+
+            <p><strong>Region:</strong> Greater Accra</p>
+            <p><strong>Schools Assigned:</strong> 24</p>
+            <p><strong>Visits Completed:</strong> 58</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Calendar -->
+    <div class="section-card">
+      <h5 class="mb-4 container-header">Field Visit Calendar</h5>
+      <div id="calendar"></div>
+    </div>
+
+    <!-- Field Visit Form -->
+    <div class="section-card">
+
+      <h5 class="mb-4 container-header">Field Visit Form</h5>
+
+      <form>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Academic Year</label>
+            <input type="text" class="form-control" id="txtAcademicYear_Visits">
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Term</label>
+            <input type="text" class="form-control" id="txtTerm_Visits">
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Supervisor Name</label>
+            <input type="text" class="form-control" id="txtSupervisorName_Visits">
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">School Name</label>
+            <input type="text" class="form-control">
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Region</label>
+            <select class="form-select">
+              <option>Greater Accra</option>
+            </select>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">District</label>
+            <input type="text" class="form-control">
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Visit Date</label>
+            <input type="date" class="form-control">
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Purpose of Visit</label>
+            <input type="text" class="form-control">
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">School Attendance</label>
+            <select class="form-select">
+              <option>Excellent</option>
+              <option>Good</option>
+              <option>Fair</option>
+              <option>Poor</option>
+            </select>
+          </div>
+
+          <div class="col-md-12 mb-3">
+            <label class="form-label">Observations</label>
+            <textarea class="form-control" rows="4"></textarea>
+          </div>
+
+          <div class="col-md-12 mb-4">
+            <label class="form-label">Recommendations</label>
+            <textarea class="form-control" rows="4"></textarea>
+          </div>
+
+          <!-- Upload -->
+          <div class="col-md-12 mb-4">
+            <label class="form-label">Upload Files</label>
+
+            <div class="upload-box">
+              <i class="fa-solid fa-cloud-arrow-up fa-2x mb-3"></i>
+              <p>Click to Upload Photos, PDFs, Voice Notes</p>
+              <input type="file" class="form-control" multiple>
+            </div>
+          </div>
+
+        </div>
+
+        <button class="btn btn-success">
+          <i class="fa-solid fa-paper-plane"></i> Submit Visit
+        </button>
+
+      </form>
+
+    </div>
+
+    <!-- Announcements -->
+    <div class="section-card">
+
+      <h5 class="mb-4 container-header">Announcements</h5>
+
+      <div class="announcement">
+        <h6>Regional School Inspection</h6>
+        <p>All supervisors are expected to complete inspections before 30th June.</p>
+      </div>
+
+      <div class="announcement">
+        <h6>Upcoming Training</h6>
+        <p>Digital supervision training scheduled for next Friday.</p>
+      </div>
+
+    </div>
+
+    <!-- Recent Visits -->
+    <div class="section-card">
+
+      <div class="mb-4 container-header">Recent Field Visits</div>
+
+      <div class="table-responsive">
+
+        <table class="table table-bordered">
+
+          <thead>
+            <tr>
+              <th>Supervisor</th>
+              <th>School</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr>
+              <td>John Doe</td>
+              <td>Accra High School</td>
+              <td>2026-05-10</td>
+              <td>
+                <span class="visit-status completed">Completed</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td>Mary Mensah</td>
+              <td>Legon Primary</td>
+              <td>2026-05-12</td>
+              <td>
+                <span class="visit-status pending">Pending</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td>Kwame Asante</td>
+              <td>Tema SHS</td>
+              <td>2026-05-15</td>
+              <td>
+                <span class="visit-status missed">Missed</span>
+              </td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- FullCalendar -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+
+  <script>
+
+    // Chart
+    const ctx = document.getElementById('visitsChart');
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Jan','Feb','Mar','Apr','May','Jun'],
+        datasets: [{
+          label: 'Visits',
+          data: [12,19,10,25,32,20]
+        }]
+      }
+    });
+
+    // Calendar
+    document.addEventListener('DOMContentLoaded', function () {
+
+      var calendarEl = document.getElementById('calendar');
+
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+
+        events: [
+          {
+            title: 'Visit - Accra High',
+            start: '2026-05-12'
+          },
+          {
+            title: 'Inspection - Tema SHS',
+            start: '2026-05-16'
+          },
+          {
+            title: 'Promotion Exercise',
+            start: '2026-05-16'
+          },
+          {
+            title: '2026 BECE Monitoring',
+            start: '2026-05-18'
+          }
+        ]
+      });
+
+      calendar.render();
+      //requestNotificationPermission()
+    });
+
+    async function requestNotificationPermission(){
+
+    const permission = await Notification.requestPermission();
+
+    if(permission === "granted"){
+
+        console.log("Notifications Enabled");
+        alert("Notification permission enabled")
+
+    }
+
+    }
+
+    //Register Service worker//
+    if("serviceWorker" in navigator){
+
+      window.addEventListener("load", () => {
+
+        navigator.serviceWorker.register("service-worker.js")
+          .then(reg => {
+            console.log("Service Worker Registered");
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
+      });
+
+    }
+
+    //Mobile top-menu toggle codes//
+    const menuBtn = document.getElementById("menuBtn");
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+
+    menuBtn.addEventListener("click", () => {
+    sidebar.classList.add("active");
+    overlay.style.display = "block";
+    });
+
+    overlay.addEventListener("click", () => {
+    sidebar.classList.remove("active");
+    overlay.style.display = "none";
+    });
+
+    window.addEventListener("online", syncOfflineVisits);
+
+    function syncOfflineVisits(){
+
+      let visits = JSON.parse(
+        localStorage.getItem("offlineVisits")
+      ) || [];
+
+      visits.forEach(visit => {
+
+        const formData = new FormData();
+
+        Object.keys(visit).forEach(key => {
+          formData.append(key, visit[key]);
+        });
+
+        fetch(WEB_APP_URL, {
+          method: "POST",
+          body: formData
+        });
+
+      });
+
+      localStorage.removeItem("offlineVisits");
+
+    }
+    
+    //----Example Submit Logic------//
+    function submitVisit(data){
+
+      if(navigator.onLine){
+
+        fetch(WEB_APP_URL, {
+          method:"POST",
+          body:data
+        })
+        .then(res => res.json())
+        .then(data => {
+          alert("Visit submitted");
+        });
+
+      } else {
+
+        saveOfflineVisit(data);
+
+        alert("No internet. Saved offline.");
+
+      }
+
+    }
+
+    function saveOfflineVisit(data){
+
+      let visits = JSON.parse(
+        localStorage.getItem("offlineVisits")
+      ) || [];
+
+      visits.push(data);
+
+      localStorage.setItem(
+        "offlineVisits",
+        JSON.stringify(visits)
+      );
+
+    }
+
+    
+    //---Install App Prompt----///
+    let deferredPrompt;
+
+      window.addEventListener("beforeinstallprompt", (e) => {
+
+        e.preventDefault();
+
+        deferredPrompt = e;
+
+        document
+          .getElementById("installBtn")
+          .classList.remove("d-none");
+
+      });
+
+      document
+      .getElementById("installBtn")
+      .addEventListener("click", async () => {
+
+        deferredPrompt.prompt();
+
+        const result = await deferredPrompt.userChoice;
+
+        if(result.outcome === "accepted"){
+          console.log("Installed");
+          alert("App Istall Successful")
+        }
+
+      });
+
+    // ---Get the Geo location cordinates for the device---//
+    navigator.geolocation.getCurrentPosition(position => {
+
+    const lat = position.coords.latitude;
+    const lng = position.coords.longitude;
+
+    console.log(lat, lng);
+
+  });
+
+
+  </script>
+
+</body>
+</html>
